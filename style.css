@@ -3,8 +3,8 @@
     max-height: 1000px;
 }
 #header {
-    min-height: 100px;
-    max-height: 200px;
+    min-height: 10vh;
+    max-height: 20vh;
 }
 
 #calculator {
@@ -17,7 +17,8 @@
 }
 #calculatorContainer {
     display: grid;
-    height: 500px;
+    min-height: 500px;
+    max-height: 90vh;
     width: 500px;
     grid-template-columns: repeat(5, 1fr);
     grid-template-rows: repeat(5, 1fr);
@@ -25,6 +26,7 @@
     align-items:center ;
     justify-content: center;
     background-color: #e27899;
+    border-radius: 20px;
 }
 #calculatorItem{
     display: grid;
@@ -42,6 +44,7 @@
     align-items: center;
     justify-items: center;
     background-color: #fa996c;
+    border-radius: 20px;
 }
 
 #footer {
@@ -49,37 +52,70 @@
     max-height: 200px;
 }
 
-#calculatorBtn{
+.calculatorBtn{
     border-style: solid;
     border-color: darkred;
     border-width: thick;
     border-radius: 100%;
     height: 90%;
-    
-    margin: 20px;
+    font-size: 25px;
+    margin: 10px;
     width: 90%;
     background-color: #57abcb;
 }
 
-#calculatorBtn:hover {
-   
+.calculatorBtn:hover {
     background-color: #019e48;
 }
+#calculatorBtnClear:hover {
+    background-color: #9e0601;
+}
 
-#screenDisplay{
+#screenDisplayTop{
+    display: grid;
+    grid-row: 1/2;
+    min-height: 100px;
+    width: 100%;
+    color: rgb(69, 79, 223);
+    max-height: 100%;
+    justify-self: end;
+    justify-content: end;
+    font-size: xx-large;
+    justify-items: end;
+    align-items: center;
+}
+
+#screenDisplayBottom{
+    display: grid;
+    grid-row: 2/3;
+    grid-auto-columns: minmax(0, 1fr);
+    grid-auto-rows: minmax(0, auto);
+    max-width: 400px;
+    background-color: rgb(223, 69, 69);
+    height: 100%;
+    justify-self: end;
+    justify-content: end;
+    font-size: xx-large;
+    justify-items: end;
+    align-items: center;
+}
+
+#screenDisplayContainer{
     display: grid;
     background-color: darkgray;
+    grid-template-columns: minmax(200px, 600px);
+    grid-template-rows: auto auto;
+    /*grid-auto-columns: minmax(0,100%);*/
+    grid-auto-rows: minmax(20px, auto);
     justify-self: center;
-    height: 120%;
+    min-height: 100%;
     width: 80%;
-    padding: -20px;
     border-style: solid;
     border-width: 10px;
     border-color: bisque;
     margin: 20px;
     grid-column:1/6 ;
     grid-row: 2/4 ;
-    font-size: 5em;
     justify-items: end;
     align-items: center;
 }

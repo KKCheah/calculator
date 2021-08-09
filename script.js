@@ -1,6 +1,4 @@
-let arg1 = 10;
-let arg2 = 2;
-
+//Arithmetic operations
 function add(arg1, arg2){
 return console.log(arg1 + arg2)
 };
@@ -35,4 +33,39 @@ function operate(operater,number1,number2){
         console.log("Sorry no value");
     }
 }
+
+
+//Calculator screen display declaration and variables
+
+let displayValue = []
+let storedValue = []
+let screen = document.querySelector('#screenDisplayBottom');
+
+
+//Numerical & Operation button click feature (test)
+let testClick = document.querySelectorAll('.calculatorBtn').forEach(testClick =>
+testClick.addEventListener('click',(z)=>{
+    console.log(z.target);
+    console.log(z);
+    console.log(z.target.value);
+    screen.textContent = z.target.value
+    displayValue.push(z.target.value);
+   
+    screen.textContent =  displayValue.join(' ');
+}));
+
+let clearClick = document.querySelector('#calculatorBtnClear').addEventListener("click", ()=>{
+    displayValue = [];
+    screen.textContent = displayValue
+})
+
+
+
+
+
+
+
+
+
+
     
