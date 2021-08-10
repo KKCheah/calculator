@@ -19,6 +19,7 @@ function operate(operater,number1,number2){
     switch (operater) {
         case 'add':
             add(number1, number2);
+
         break;
         case 'subtract':
             subtract(number1, number2);
@@ -37,10 +38,13 @@ function operate(operater,number1,number2){
 
 //Calculator screen display declaration and variables
 
-let displayValue = []
+let displayValueBottom = []
+let displayValueTop = []
 let storedValue = []
-let screen = document.querySelector('#screenDisplayBottom');
-
+let storeOperation = [];
+let screenBottom = document.querySelector('#screenDisplayBottom');
+let screenTop = document.querySelector('#screenDisplayTop');
+let operatorClickStatus = false;
 
 //Numerical & Operation button click feature (test)
 let testClick = document.querySelectorAll('.calculatorBtn').forEach(testClick =>
@@ -48,17 +52,62 @@ testClick.addEventListener('click',(z)=>{
     console.log(z.target);
     console.log(z);
     console.log(z.target.value);
-    screen.textContent = z.target.value
-    displayValue.push(z.target.value);
-   
-    screen.textContent =  displayValue.join(' ');
+    /*screenBottom.textContent = z.target.value
+    displayValueBottom.push(z.target.value);
+    screenBottom.textContent =  displayValueBottom.join(' ');*/
+
+    if (displayValueBottom == [] || operatorClickStatus == false){
+    screenBottom.textContent = z.target.value
+    displayValueBottom.push(z.target.value);
+    screenBottom.textContent =  displayValueBottom.join(' ');
+    } else if (operatorClickStatus == true){
+    displayValueBottom = [];
+    screenTop.textContent =  screenBottom.textContent;
+    displayValueBottom.push(z.target.value);
+    screenBottom.textContent =  displayValueBottom.join(' ')
+    operatorClickStatus = false
+    }
+
+
+    
 }));
 
 let clearClick = document.querySelector('#calculatorBtnClear').addEventListener("click", ()=>{
-    displayValue = [];
-    screen.textContent = displayValue
+    displayValueBottom = [];
+    screenBottom.textContent = displayValueBottom
+
 })
 
+let operatorBtnClick = document.querySelectorAll('.operator').forEach(operatorBtnClick =>
+    operatorBtnClick.addEventListener('click',(e)=>{
+        console.log(e.target.value + "Operation Test")
+        switch (e.target.value){
+            case '+':
+            storeOperation = 'add'
+            console.log("switch +")
+            operatorClickStatus = true;
+            break 
+            case '-':
+            storeOperation = 'subtract'
+            console.log("switch -")
+            operatorClickStatus = true;
+            break 
+            case 'x':
+            storeOperation = 'multiply'
+            console.log("switch x")
+            operatorClickStatus = true;
+            break 
+            case '/':
+            storeOperation = 'divide'
+            console.log("switch /")
+            operatorClickStatus = true;
+            break 
+            default: 
+            console.log("switch for operation failed")
+        }
+        
+    })
+    );
 
 
 
