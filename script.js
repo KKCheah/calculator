@@ -1,5 +1,7 @@
 //Arithmetic operations
 function add(arg1, arg2){
+    arg1 = parseInt(arg1)
+    arg2 = parseInt(arg2)
 return console.log(arg1 + arg2)
 };
 
@@ -19,7 +21,7 @@ function operate(operater,number1,number2){
     switch (operater) {
         case 'add':
             add(number1, number2);
-
+            
         break;
         case 'subtract':
             subtract(number1, number2);
@@ -38,9 +40,9 @@ function operate(operater,number1,number2){
 
 //Calculator screen display declaration and variables
 
-let displayValueBottom = []
-let displayValueTop = []
-let storedValue = []
+let displayValueBottom = [];
+let displayValueTop = [];
+let storedValue = [];
 let storeOperation = [];
 let screenBottom = document.querySelector('#screenDisplayBottom');
 let screenTop = document.querySelector('#screenDisplayTop');
@@ -57,15 +59,17 @@ testClick.addEventListener('click',(z)=>{
     screenBottom.textContent =  displayValueBottom.join(' ');*/
 
     if (displayValueBottom == [] || operatorClickStatus == false){
-    screenBottom.textContent = z.target.value
-    displayValueBottom.push(z.target.value);
-    screenBottom.textContent =  displayValueBottom.join(' ');
+    screenBottom.textContent += z.target.value
+    displayValueBottom = screenBottom.textContent
+    
     } else if (operatorClickStatus == true){
+    screenBottom.textContent = []
+    screenTop.textContent =  displayValueBottom;
+    displayValueTop = displayValueBottom;
     displayValueBottom = [];
-    screenTop.textContent =  screenBottom.textContent;
-    displayValueBottom.push(z.target.value);
-    screenBottom.textContent =  displayValueBottom.join(' ')
-    operatorClickStatus = false
+    screenBottom.textContent += z.target.value
+    displayValueBottom = screenBottom.textContent;
+    operatorClickStatus = false;
     }
 
 
@@ -73,9 +77,12 @@ testClick.addEventListener('click',(z)=>{
 }));
 
 let clearClick = document.querySelector('#calculatorBtnClear').addEventListener("click", ()=>{
-    displayValueBottom = [];
-    screenBottom.textContent = displayValueBottom
-
+displayValueBottom = [];
+displayValueTop = [];
+storedValue = [];
+storeOperation = [];
+screenBottom.textContent = displayValueBottom;
+screenTop.textContent = displayValueTop;
 })
 
 let operatorBtnClick = document.querySelectorAll('.operator').forEach(operatorBtnClick =>
@@ -108,13 +115,13 @@ let operatorBtnClick = document.querySelectorAll('.operator').forEach(operatorBt
         
     })
     );
+    let testDisplay;
+    let equalClick = document.querySelectorAll('.equal').forEach(equalClick =>
+        equalClick.addEventListener('click',()=>{
+        console.log("equal button was succesfully clicked");
+        testDisplay = operate(storeOperation, displayValueBottom, displayValueTop);
+        
+        operatorClickStatus = false;
+        }));
 
-
-
-
-
-
-
-
-
-    
+        screenBottom.textContent = testDisplay;

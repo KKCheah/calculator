@@ -70,6 +70,18 @@
     background-color: #57abcb;
 }
 
+.calculatorBtnOperator{
+    border-style: solid;
+    border-color: darkred;
+    border-width: thick;
+    border-radius: 100%;
+    height: 90%;
+    font-size: 25px;
+    margin: 10px;
+    width: 90%;
+    background-color: #57abcb;
+}
+
 .calculatorBtn:hover {
     background-color: #019e48;
 }
