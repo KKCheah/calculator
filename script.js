@@ -2,39 +2,46 @@
 function add(arg1, arg2){
     arg1 = parseInt(arg1)
     arg2 = parseInt(arg2)
-return console.log(arg1 + arg2)
+return (arg1 + arg2)
 };
 
 function subtract(arg1, arg2){
-    return console.log(arg1 - arg2)
+    arg1 = parseInt(arg1)
+    arg2 = parseInt(arg2)
+    return arg1 - arg2
 };
 
 function multiply(arg1, arg2){
-    return console.log(arg1 * arg2)
+    arg1 = parseInt(arg1)
+    arg2 = parseInt(arg2)
+    return arg1 * arg2
 };
 
 function divide(arg1, arg2){
-    return console.log(arg1 / arg2)
+    arg1 = parseInt(arg1)
+    arg2 = parseInt(arg2)
+    return arg1 / arg2
 };
-
+let results;
 function operate(operater,number1,number2){
     switch (operater) {
         case 'add':
-            add(number1, number2);
-            
+            results = add(number1, number2);
         break;
         case 'subtract':
-            subtract(number1, number2);
+            results = subtract(number1, number2);
         break;
         case 'multiply':
-            multiply(number1, number2);
+            results = multiply(number1, number2);
         break;
         case 'divide':
-            divide(number1, number2);
+            results = divide(number1, number2);
         break;
         default : 
         console.log("Sorry no value");
     }
+
+    return results
 }
 
 
@@ -115,13 +122,12 @@ let operatorBtnClick = document.querySelectorAll('.operator').forEach(operatorBt
         
     })
     );
-    let testDisplay;
+    
     let equalClick = document.querySelectorAll('.equal').forEach(equalClick =>
         equalClick.addEventListener('click',()=>{
         console.log("equal button was succesfully clicked");
-        testDisplay = operate(storeOperation, displayValueBottom, displayValueTop);
-        
+        screenBottom.textContent = operate(storeOperation, displayValueTop, displayValueBottom);
         operatorClickStatus = false;
         }));
 
-        screenBottom.textContent = testDisplay;
+       
