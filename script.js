@@ -2,7 +2,7 @@
 function add(arg1, arg2){
     arg1 = parseInt(arg1)
     arg2 = parseInt(arg2)
-return (arg1 + arg2)
+    return (arg1 + arg2)
 };
 
 function subtract(arg1, arg2){
@@ -25,17 +25,21 @@ function divide(arg1, arg2){
 let results;
 function operate(operater,number1,number2){
     switch (operater) {
-        case 'add':
+        case '+':
             results = add(number1, number2);
+            
         break;
-        case 'subtract':
+        case '-':
             results = subtract(number1, number2);
+            
         break;
-        case 'multiply':
+        case 'x':
             results = multiply(number1, number2);
+            
         break;
-        case 'divide':
+        case '÷':
             results = divide(number1, number2);
+            
         break;
         default : 
         console.log("Sorry no value");
@@ -49,12 +53,12 @@ function operate(operater,number1,number2){
 
 let displayValueBottom = [];
 let displayValueTop = [];
-let storedValue = [];
+let memStoredValue
 let storeOperation = [];
 let screenBottom = document.querySelector('#screenDisplayBottom');
 let screenTop = document.querySelector('#screenDisplayTop');
 let operatorClickStatus = false;
-
+let equalClickStatus = false;
 //Numerical & Operation button click feature (test)
 let testClick = document.querySelectorAll('.calculatorBtn').forEach(testClick =>
 testClick.addEventListener('click',(z)=>{
@@ -64,11 +68,14 @@ testClick.addEventListener('click',(z)=>{
     /*screenBottom.textContent = z.target.value
     displayValueBottom.push(z.target.value);
     screenBottom.textContent =  displayValueBottom.join(' ');*/
-
-    if (displayValueBottom == [] || operatorClickStatus == false){
-    screenBottom.textContent += z.target.value
-    displayValueBottom = screenBottom.textContent
     
+    if (screenBottom.textContent != [] && equalClickStatus == true){
+    screenBottom.textContent = z.target.value
+    displayValueBottom = screenBottom.textContent
+    equalClickStatus = false;}
+    else if (screenBottom.textContent == [] || operatorClickStatus == false){
+    screenBottom.textContent += z.target.value
+    displayValueBottom = screenBottom.textContent;
     } else if (operatorClickStatus == true){
     screenBottom.textContent = []
     screenTop.textContent =  displayValueBottom;
@@ -85,11 +92,11 @@ testClick.addEventListener('click',(z)=>{
 
 let clearClick = document.querySelector('#calculatorBtnClear').addEventListener("click", ()=>{
 displayValueBottom = [];
-displayValueTop = [];
-storedValue = [];
+displayValueTop = [];   
 storeOperation = [];
 screenBottom.textContent = displayValueBottom;
 screenTop.textContent = displayValueTop;
+
 })
 
 let operatorBtnClick = document.querySelectorAll('.operator').forEach(operatorBtnClick =>
@@ -97,27 +104,31 @@ let operatorBtnClick = document.querySelectorAll('.operator').forEach(operatorBt
         console.log(e.target.value + "Operation Test")
         switch (e.target.value){
             case '+':
-            storeOperation = 'add'
-            console.log("switch +")
-            operatorClickStatus = true;
+                storeOperation = '+'
+                console.log("switch +")
+                operatorClickStatus = true;
+                screenBottom.textContent += "+"
             break 
             case '-':
-            storeOperation = 'subtract'
-            console.log("switch -")
-            operatorClickStatus = true;
+                storeOperation = '-'
+                console.log("switch -")
+                operatorClickStatus = true;
+                screenBottom.textContent += "-"
             break 
             case 'x':
-            storeOperation = 'multiply'
-            console.log("switch x")
-            operatorClickStatus = true;
+                storeOperation = 'x'
+                console.log("switch x")
+                operatorClickStatus = true;
+                screenBottom.textContent += "x"
             break 
-            case '/':
-            storeOperation = 'divide'
-            console.log("switch /")
-            operatorClickStatus = true;
+            case '÷':
+                storeOperation = '÷'
+                console.log("switch /")
+                operatorClickStatus = true;
+                screenBottom.textContent += "/"
             break 
             default: 
-            console.log("switch for operation failed")
+                console.log("switch for operation failed")
         }
         
     })
@@ -126,8 +137,23 @@ let operatorBtnClick = document.querySelectorAll('.operator').forEach(operatorBt
     let equalClick = document.querySelectorAll('.equal').forEach(equalClick =>
         equalClick.addEventListener('click',()=>{
         console.log("equal button was succesfully clicked");
+        equalClickStatus = true;
+        if (screenBottom.textContent == [] && equalClickStatus == true) {
+            alert("Don't crash the calculator with equaling nothing please");
+            console.log("SEAGNFISGBO");
+            return
+         }
         screenBottom.textContent = operate(storeOperation, displayValueTop, displayValueBottom);
+        screenTop.textContent = displayValueTop + " " + storeOperation + " " + displayValueBottom;
         operatorClickStatus = false;
+        displayValueTop = displayValueTop;
+        memStoredValue = screenBottom.textContent;
+        displayValueBottom = [];
+        console.log("equal button was succesfully clicked");
+        
         }));
-
+ 
+    
+        
+    
        
