@@ -55,6 +55,7 @@ let displayValueBottom = [];
 let displayValueTop = [];
 let memStoredValue
 let storeOperation = [];
+let storeOperationStatus = false
 let screenBottom = document.querySelector('#screenDisplayBottom');
 let screenTop = document.querySelector('#screenDisplayTop');
 let operatorClickStatus = false;
@@ -68,25 +69,33 @@ testClick.addEventListener('click',(z)=>{
     /*screenBottom.textContent = z.target.value
     displayValueBottom.push(z.target.value);
     screenBottom.textContent =  displayValueBottom.join(' ');*/
+
+    
     
     if (screenBottom.textContent != [] && equalClickStatus == true){
-    screenBottom.textContent = z.target.value
-    displayValueBottom = screenBottom.textContent
-    equalClickStatus = false;}
-    else if (screenBottom.textContent == [] || operatorClickStatus == false){
-    screenBottom.textContent += z.target.value
-    displayValueBottom = screenBottom.textContent;
+        screenBottom.textContent = z.target.value
+        displayValueBottom = screenBottom.textContent
+        equalClickStatus = false;
+    }else if (screenBottom.textContent == [] || operatorClickStatus == false){
+        screenBottom.textContent += z.target.value
+        displayValueBottom = screenBottom.textContent;
     } else if (operatorClickStatus == true){
-    screenBottom.textContent = []
-    screenTop.textContent =  displayValueBottom;
-    displayValueTop = displayValueBottom;
-    displayValueBottom = [];
-    screenBottom.textContent += z.target.value
-    displayValueBottom = screenBottom.textContent;
-    operatorClickStatus = false;
+        screenBottom.textContent = []
+        screenTop.textContent =  displayValueBottom;
+        displayValueTop = displayValueBottom;
+        displayValueBottom = [];
+        screenBottom.textContent += z.target.value
+        displayValueBottom = screenBottom.textContent;
+        /*operatorClickStatus = true; */
     }
 
-
+    if (screenBottom.textContent != [] && equalClickStatus == false && screenTop.textContent != [] && storeOperation == true ){
+        screenBottom.textContent = operate(storeOperation, displayValueTop, displayValueBottom);
+        screenTop.textContent = displayValueTop + " " + storeOperation + " " + displayValueBottom;
+        operatorClickStatus = false;
+        displayValueTop = displayValueTop;
+        memStoredValue = screenBottom.textContent;
+    }
     
 }));
 
@@ -94,6 +103,7 @@ let clearClick = document.querySelector('#calculatorBtnClear').addEventListener(
 displayValueBottom = [];
 displayValueTop = [];   
 storeOperation = [];
+storeOperationStatus = false;
 screenBottom.textContent = displayValueBottom;
 screenTop.textContent = displayValueTop;
 
@@ -108,24 +118,28 @@ let operatorBtnClick = document.querySelectorAll('.operator').forEach(operatorBt
                 console.log("switch +")
                 operatorClickStatus = true;
                 screenBottom.textContent += "+"
+                storeOperationStatus = true;
             break 
             case '-':
                 storeOperation = '-'
                 console.log("switch -")
                 operatorClickStatus = true;
                 screenBottom.textContent += "-"
+                storeOperationStatus = true;
             break 
             case 'x':
                 storeOperation = 'x'
                 console.log("switch x")
                 operatorClickStatus = true;
                 screenBottom.textContent += "x"
+                storeOperationStatus = true;
             break 
             case '÷':
                 storeOperation = '÷'
                 console.log("switch /")
                 operatorClickStatus = true;
                 screenBottom.textContent += "/"
+                storeOperationStatus = true;
             break 
             default: 
                 console.log("switch for operation failed")
@@ -150,7 +164,8 @@ let operatorBtnClick = document.querySelectorAll('.operator').forEach(operatorBt
         memStoredValue = screenBottom.textContent;
         displayValueBottom = [];
         console.log("equal button was succesfully clicked");
-        
+        storeOperationStatus = false;
+        storeOperation = [];
         }));
  
     
