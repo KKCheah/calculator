@@ -33,7 +33,7 @@ function operate(operater,number1,number2){
             results = subtract(number1, number2);
             
         break;
-        case 'x':
+        case '×':
             results = multiply(number1, number2);
             
         break;
@@ -59,6 +59,7 @@ let storeOperationStatus = false
 let screenBottom = document.querySelector('#screenDisplayBottom');
 let screenTop = document.querySelector('#screenDisplayTop');
 let operatorClickStatus = false;
+let operatorClickStatusPast = false;
 let equalClickStatus = false;
 //Numerical & Operation button click feature (test)
 let testClick = document.querySelectorAll('.calculatorBtn').forEach(testClick =>
@@ -70,9 +71,35 @@ testClick.addEventListener('click',(z)=>{
     displayValueBottom.push(z.target.value);
     screenBottom.textContent =  displayValueBottom.join(' ');*/
 
+    if (screenBottom.textContent == []){
+        screenBottom.textContent = z.target.value
+        displayValueBottom = screenBottom.textContent
+    } else if (screenBottom.textContent != [] && operatorClickStatus == false && equalClickStatus == false){
+        screenBottom.textContent += z.target.value
+        displayValueBottom = screenBottom.textContent
+    } else if (screenBottom.textContent != [] && operatorClickStatus == true){
+        screenBottom.textContent = []
+        screenTop.textContent =  displayValueBottom + " " + storeOperation;
+        displayValueTop = displayValueBottom;
+        displayValueBottom = [];
+        screenBottom.textContent += z.target.value 
+        displayValueBottom = screenBottom.textContent;
+        operatorClickStatus = false; 
+        operatorClickStatusPast = true;
+    } else if (screenBottom.textContent != [] && screenTop.textContent != [] && operatorClickStatusPast == true){
+        screenBottom.textContent = operate(storeOperation, displayValueTop, displayValueBottom);
+        screenTop.textContent = displayValueTop + " " + storeOperation + " " + displayValueBottom;
+        operatorClickStatus = false;
+        displayValueTop = displayValueTop;
+        memStoredValue = screenBottom.textContent;
+        displayValueBottom = screenBottom.textContent
+        console.log("equal button was succesfully clicked");
+        operatorClickStatusPast = false;
+        storeOperation = [];
+    }
     
-    
-    if (screenBottom.textContent != [] && equalClickStatus == true){
+
+    /* if (screenBottom.textContent != [] && equalClickStatus == true){
         screenBottom.textContent = z.target.value
         displayValueBottom = screenBottom.textContent
         equalClickStatus = false;
@@ -86,23 +113,25 @@ testClick.addEventListener('click',(z)=>{
         displayValueBottom = [];
         screenBottom.textContent += z.target.value
         displayValueBottom = screenBottom.textContent;
-        /*operatorClickStatus = true; */
+        operatorClickStatus = true; 
     }
-
-    if (screenBottom.textContent != [] && equalClickStatus == false && screenTop.textContent != [] && storeOperation == true ){
+    if (screenBottom.textContent != [] && equalClickStatus == false && screenTop.textContent != [] && operatorClickStatus == true ){
         screenBottom.textContent = operate(storeOperation, displayValueTop, displayValueBottom);
         screenTop.textContent = displayValueTop + " " + storeOperation + " " + displayValueBottom;
         operatorClickStatus = false;
         displayValueTop = displayValueTop;
         memStoredValue = screenBottom.textContent;
     }
-    
+    */
 }));
 
 let clearClick = document.querySelector('#calculatorBtnClear').addEventListener("click", ()=>{
 displayValueBottom = [];
 displayValueTop = [];   
 storeOperation = [];
+operatorClickStatus = false;
+operatorClickStatusPast = false;
+equalClickStatus = false;
 storeOperationStatus = false;
 screenBottom.textContent = displayValueBottom;
 screenTop.textContent = displayValueTop;
@@ -111,7 +140,11 @@ screenTop.textContent = displayValueTop;
 
 let operatorBtnClick = document.querySelectorAll('.operator').forEach(operatorBtnClick =>
     operatorBtnClick.addEventListener('click',(e)=>{
+        if (operatorClickStatus == true) {
+            return alert("clicked operator multiple times")
+        }
         console.log(e.target.value + "Operation Test")
+        let oldOperation = storeOperation;
         switch (e.target.value){
             case '+':
                 storeOperation = '+'
@@ -127,24 +160,38 @@ let operatorBtnClick = document.querySelectorAll('.operator').forEach(operatorBt
                 screenBottom.textContent += "-"
                 storeOperationStatus = true;
             break 
-            case 'x':
-                storeOperation = 'x'
-                console.log("switch x")
+            case '×':
+                storeOperation = '×'
+                console.log("switch ×")
                 operatorClickStatus = true;
-                screenBottom.textContent += "x"
+                screenBottom.textContent += "×"
                 storeOperationStatus = true;
             break 
             case '÷':
                 storeOperation = '÷'
-                console.log("switch /")
+                console.log("switch ÷")
                 operatorClickStatus = true;
-                screenBottom.textContent += "/"
+                screenBottom.textContent += "÷"
                 storeOperationStatus = true;
             break 
             default: 
                 console.log("switch for operation failed")
         }
-        
+
+        let swapValue;
+        if (screenBottom.textContent != [] && screenTop.textContent != [] && operatorClickStatusPast == true){
+            swapValue = operate(oldOperation, displayValueTop, displayValueBottom)
+            screenBottom.textContent = swapValue +  " " + storeOperation;
+            screenTop.textContent = [];
+            screenTop.textContent = displayValueTop + " " + oldOperation + " " + displayValueBottom;
+            operatorClickStatus = true;
+            displayValueTop = displayValueTop;
+            memStoredValue = screenBottom.textContent;
+            displayValueBottom = swapValue;
+            console.log("The past operator has been activated");
+            operatorClickStatusPast = false;
+            /* storeOperation = []; */  
+        }
     })
     );
     
@@ -158,7 +205,7 @@ let operatorBtnClick = document.querySelectorAll('.operator').forEach(operatorBt
             return
          }
         screenBottom.textContent = operate(storeOperation, displayValueTop, displayValueBottom);
-        screenTop.textContent = displayValueTop + " " + storeOperation + " " + displayValueBottom;
+        screenTop.textContent = displayValueTop + " " + storeOperation + " " + displayValueBottom + " = " + " ";
         operatorClickStatus = false;
         displayValueTop = displayValueTop;
         memStoredValue = screenBottom.textContent;
