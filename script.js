@@ -138,6 +138,7 @@ screenTop.textContent = displayValueTop;
 
 })
 
+//Cleaner codess for invoking operation functions
 let operatorBtnClick = document.querySelectorAll('.operator').forEach(operatorBtnClick =>
     operatorBtnClick.addEventListener('click',(e)=>{
         if (operatorClickStatus == true) {
@@ -145,6 +146,25 @@ let operatorBtnClick = document.querySelectorAll('.operator').forEach(operatorBt
         }
         console.log(e.target.value + "Operation Test")
         let oldOperation = storeOperation;
+        let option = null;
+
+        if (e.target.value === '+'){option = '+'};
+        if (e.target.value === '-'){option = '-'};
+        if (e.target.value === '×'){option = '×'};
+        if (e.target.value === '÷'){option = '÷'};
+
+        if (option !== null){
+            storeOperation = option
+            console.log(`switch ${option}`)
+            screenBottom.textContent += option;
+            operatorClickStatus = true;
+            storeOperationStatus = true;
+        } else {
+            console.log("switch for operation failed")
+        }
+
+
+/* Dirty codes
         switch (e.target.value){
             case '+':
                 storeOperation = '+'
@@ -177,7 +197,7 @@ let operatorBtnClick = document.querySelectorAll('.operator').forEach(operatorBt
             default: 
                 console.log("switch for operation failed")
         }
-
+*/
         let swapValue;
         if (screenBottom.textContent != [] && screenTop.textContent != [] && operatorClickStatusPast == true){
             swapValue = operate(oldOperation, displayValueTop, displayValueBottom)
