@@ -4,12 +4,24 @@
     grid-template-rows: repeat(5, 1fr);
     min-height: 500px;
     max-height: 1000px;
+    animation: testing 10s infinite;
+    animation-direction: alternate;
 }
+
+@keyframes testing {
+    from{background-color: #caf0f8 ;}
+    to{background-color: #90e0ef;} 
+}
+
 #header {
     grid-column: 1/6;
     grid-row: 1/2;
     min-height: 10vh;
     max-height: 20vh;
+    display: grid;
+    justify-content: center;
+    align-content: center;
+    font-size: 100px;
 }
 
 #calculator {
@@ -31,9 +43,11 @@
     justify-self: center;
     align-items:center ;
     justify-content: center;
-    background-color: #e27899;
+    background-color: #52B69A;
     border-radius: 20px;
+    border: black solid 5px;
 }
+
 #calculatorItem{
     display: grid;
     /*grid-template-columns: auto;*/
@@ -49,8 +63,10 @@
     justify-content: stretch;
     align-items: center;
     justify-items: center;
-    background-color: #fa996c;
+    background-color: #99D98C;
     border-radius: 20px;
+    border: black solid;
+    border-width: 3px 0px 3px 3px;
 }
 
 #footer {
@@ -60,33 +76,37 @@
 
 .calculatorBtn{
     border-style: solid;
-    border-color: darkred;
+    border-color: #184e77; 
     border-width: thick;
     border-radius: 100%;
     height: 90%;
     font-size: 25px;
     margin: 10px;
     width: 90%;
-    background-color: #57abcb;
+    background-color: #D9ED92;
 }
 
 .calculatorBtnOperator{
     border-style: solid;
-    border-color: darkred;
+    border-color: #D9ED92;
     border-width: thick;
     border-radius: 100%;
     height: 90%;
     font-size: 25px;
     margin: 10px;
     width: 90%;
-    background-color: #57abcb;
+    background-color: #76c893;
+}
+
+.calculatorBtnOperator:hover{
+    background-color: #ec7bf0;
 }
 
 .calculatorBtn:hover {
-    background-color: #019e48;
+    background-color: #6478eb;
 }
 #calculatorBtnClear:hover {
-    background-color: #9e0601;
+    background-color: #b692f0;
 }
 
 #screenDisplayTop{
@@ -102,6 +122,7 @@
     justify-items: end;
     align-items: center;
     overflow: auto;
+    margin: 0px 10px;
 }
 
 #screenDisplayBottom{
@@ -110,7 +131,6 @@
     grid-auto-columns: minmax(0, 1fr);
     grid-auto-rows: minmax(20px, 100px);
     max-width: 400px;
-    background-color: rgb(223, 69, 69);
     height: 100%;
     justify-self: end;
     justify-content: end;
@@ -118,6 +138,7 @@
     justify-items: end;
     align-items: center;
     overflow: auto;
+    margin: 0px 10px;
 }
 
 #screenDisplayContainer{
@@ -132,20 +153,21 @@
     width: 80%;
     border-style: solid;
     border-width: 10px;
-    border-color: bisque;
+    border-color: #D9ED92;
     margin: 20px;
     grid-column:1/6 ;
     grid-row: 2/4 ;
     justify-items: end;
     align-items: center;
     overflow: hidden;
+    
 }
 #calculatorBtnClear{
     display: grid;
     grid-column: 1/3;
     grid-row: 5/6;
     border-style: solid;
-    border-color: darkred;
+    border-color: #1A759F;
     border-width: thick;
     border-radius: 100%;
     height: 90%;
